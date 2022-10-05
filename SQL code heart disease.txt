@@ -1,0 +1,86 @@
+//HEART DISEASE
+==============================
+Show All data order by col 1,4 |
+==============================
+
+SELECT * FROM `heart-362915.heart1.heart1` 
+where Year is not null
+order by 1,4;
+
+=======================================
+Show years,month,and fatalities in data |
+=======================================
+
+SELECT Year, Month ,Fatalities FROM `heart-362915.heart1.heart1`  
+order by 1;
+
+================================================================
+find & show total Fatalities and data state,illnesses, month descanding | 
+================================================================
+
+SELECT State,Illnesses,Month,MAX(Fatalities)as totalFL
+FROM `heart-362915.heart1.heart1` 
+group by state,Illnesses,Month
+order by totalFL Desc
+
+==================================================================
+find illness_rate and show High_FL illneses  where location state |
+==================================================================
+
+SELECT State,Illnesses,MAX(Fatalities)as HighFL, MAX ((Fatalities/Illnesses)*100)as illness_rate
+ FROM `heart-362915.heart1.heart1` 
+group by state,Illnesses
+order by illness_rate Desc
+
+=================================================================
+find showing year higest datya fatalities count descanding        |
+=================================================================
+
+/*showing year higest data Fatalities count .....*/
+SELECT Year,Max(cast(Fatalities as int)) as TotalFL
+ FROM `heart-362915.heart1.heart1`  
+where Year is not null
+GROUP BY Year
+order by TotalFL desc
+
+======================================================
+find total fatalitiess not in  state " Newyork,Texas " |
+======================================================
+
+SELECT State,sum(cast(Fatalities as int)) as TotalFL
+ FROM `heart-362915.heart1.heart1`  
+where Year is not null
+and State not in ( 'New York','Texas')
+GROUP BY State
+order by TotalFL desc
+
+==================================================
+showing Total Fatalitiess and Total Illnesses      |
+==================================================
+
+SELECT sum(Illnesses) as total_illnesses,sum(cast(Fatalities as int)) as TotalFL
+ FROM `heart-362915.heart1.heart1`  
+where Year is not null
+order by 1,2
+
+======================================================================
+find and showing illnes rate used formula ( fatalitiess/illness )* 100 |
+======================================================================
+
+/*highest illnes rate*/
+SELECT State,Illnesses,MAX(Fatalities)as HighFL, MAX ((Fatalities/Illnesses)*100)as illness_rate
+ FROM `heart-362915.heart1.heart1` 
+group by state,Illnesses
+order by illness_rate Desc
+
+=================================================================
+find and showing FL rate in year hopitalization,month and illneses| 
+=================================================================
+
+SELECT Year,Month,Hospitalizations,Illnesses,MAX(Illnesses) as highIL,MAX((Fatalities/Illnesses)*100) as Fl_rate
+ FROM `heart-362915.heart1.heart1` 
+where State Like '%Florida%'
+group by Year,Month,Hospitalizations,Illnesses
+order by 1,2 desc
+
+
